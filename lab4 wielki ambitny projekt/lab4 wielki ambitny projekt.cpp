@@ -20,6 +20,17 @@ int main() {
 }
 
 float FtoC(float stopnie) { 
-    float wynik = (5.0 / 9.0) * (stopnie - 32.0);
+    float c = (5.0 / 9.0) * (stopnie - 32.0);
     return wynik;
 }
+
+float FtoK(float stopnie) {
+    float k = (5.0 / 9.0) * (stopnie + 459.67);
+    return wynik;
+}
+float CtoF(float stopnie) {
+    float f = (5.0 / 9.0) * stopnie + 32.0;
+    return wynik;
+}
+
+//dalej: pozostale funkcje, przetestowac je, kontynuowac kolejne polecenia
