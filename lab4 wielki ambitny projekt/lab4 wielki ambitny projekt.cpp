@@ -13,49 +13,91 @@ void menu();
 float getF();
 float getC();
 float getK();
+float check(float temp, char stopnie);
 
-int main() { 
-  float degrees, result;
-  int choice;
-  
 
- while (1) {
-      menu();
-      cin >> choice;
-      switch (choice)
-      {
-      case 1:
-          degrees = getF();
-          cout << "Temperature in Celsius: " << FtoC(degrees) << endl;
-          break;
-      case 2:
-          degrees = getF();
-          cout << "Temperature in Kelvin: " << FtoK(degrees) << endl;
-          break;
-      case 3:
-          degrees = getC();
-          cout << "Temperature in Fahrenheit: " << CtoF(degrees) << endl;
-          break;
-      case 4:
-          degrees = getC();
-          cout << "Temperature in Kelvin: " << CtoK(degrees) << endl;
-          break;
-      case 5:
-          degrees = getK();
-          cout << "Temperature in Celsius: " << KtoC(degrees) << endl;
-          break;
-      case 6:
-          degrees = getK();
-          cout << "Temperature in Fahrenheit: " << KtoF(degrees) << endl;
-          break;
-      default:
-          cout << "Exiting program";
-              return 0;
-      }
-  }
+int main() {
+    float degrees, result;
+    int choice;
 
-    return 0;
-}
+
+    while (1) {
+        menu();
+        cin >> choice;
+        switch (choice)
+        {
+        case 1:
+            degrees = getF();
+            degrees = check(degrees, 'F');
+            if (degrees == -999.0) {
+                cout << "Invalid temperature." << endl;
+            }
+            else {
+                cout << "Temperature in Celsius: " << FtoC(degrees) << endl;
+            }
+            break;
+        case 2:
+            degrees = getF();
+            degrees = check(degrees, 'F');
+            if (degrees == -999.0) {
+                cout << "Invalid temperature." << endl;
+            }
+            else {
+                cout << "Temperature in Kelvin: " << FtoK(degrees) << endl;
+            }
+            break;
+        case 3:
+            degrees = getC();
+            degrees = check(degrees, 'C');
+            if (degrees == -999.0) {
+                cout << "Invalid temperature." << endl;
+            }
+            else {
+                cout << "Temperature in Fahrenheit: " << CtoF(degrees) << endl;
+            }
+
+            break;
+        case 4:
+            degrees = getC();
+            degrees = check(degrees, 'C');
+            if (degrees == -999.0) {
+                cout << "Invalid temperature." << endl;
+            }
+            else {
+                cout << "Temperature in Kelvin: " << CtoK(degrees) << endl;
+            }
+
+            break;
+        case 5:
+            degrees = getK();
+            degrees = check(degrees, 'K');
+            if (degrees == -999.0) {
+                cout << "Invalid temperature." << endl;
+            }
+            else {
+                cout << "Temperature in Celsius: " << KtoC(degrees) << endl;
+            }
+            break;
+        case 6:
+            degrees = getK();
+            degrees = check(degrees, 'K');
+            if (degrees == -999.0) {
+                cout << "Invalid temperature." << endl;
+            }
+            else {
+                cout << "Temperature in Fahrenheit: " << KtoF(degrees) << endl;
+            }
+            break;
+
+        default:
+            cout << "Exiting program";
+            return 0;
+            }
+        }
+
+        return 0;
+    }
+
 
 
 float FtoC(float degrees){ //works
@@ -117,4 +159,26 @@ float getK() {
     cout << "Enter the temperature in Kelvin: ";
     cin >> K;
     return K;
+}
+
+float check(float temp, char stopnie) {
+    if (stopnie == 'K') {
+        if (temp < 0.0) {
+            return -999.0;
+        }
+    }
+    else if (stopnie == 'C') {
+        if (temp < -273.15) {
+            return -999.0;
+        } 
+    }
+    else if (stopnie == 'F') {
+        if (temp < -459.67) {
+            return -999.0;
+        }
+    }
+    else { // unknown unit
+        return -999.0f;
+    }
+    return temp;
 }
