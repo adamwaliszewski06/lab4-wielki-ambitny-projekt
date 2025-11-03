@@ -9,54 +9,43 @@ float CtoF(float degrees);
 float CtoK(float degrees);
 float KtoC(float degrees);
 float KtoF(float degrees);
-void menu() {
-    cout << endl << "Enter a number to choose an option: " << endl;
-    cout << "1 - convert Fahrenheit to Celsius" << endl;
-    cout << "2 - convert Fahrenheit to Kelvin" << endl;
-    cout << "3 - convert Celsius to Fahrenheit" << endl;
-    cout << "4 - convert Celsius to Kelvin " << endl;
-    cout << "5 - convert Kelvin to Celsius" << endl;
-    cout << "6 - convert Kelvin to Fahrenheit" << endl;
-    cout << "7 - exit the program" << endl;
-}
+void menu();
+float getF();
+float getC();
+float getK();
 
 int main() { 
   float degrees, result;
   int choice;
   
 
-  while (1) {
+ while (1) {
       menu();
       cin >> choice;
-      switch (choice) {
+      switch (choice)
+      {
       case 1:
-          cout << "Enter the temperature in Fahrenheit: ";
-          cin >> degrees;
+          degrees = getF();
           cout << "Temperature in Celsius: " << FtoC(degrees) << endl;
           break;
       case 2:
-          cout << "Enter the temperature in Fahrenheit: ";
-          cin >> degrees;
+          degrees = getF();
           cout << "Temperature in Kelvin: " << FtoK(degrees) << endl;
           break;
       case 3:
-          cout << "Enter the temperature in Celsius: ";
-          cin >> degrees;
+          degrees = getC();
           cout << "Temperature in Fahrenheit: " << CtoF(degrees) << endl;
           break;
       case 4:
-          cout << "Enter the temperature in Celsius: ";
-          cin >> degrees;
+          degrees = getC();
           cout << "Temperature in Kelvin: " << CtoK(degrees) << endl;
           break;
       case 5:
-          cout << "Enter the temperature in Kelvin: ";
-          cin >> degrees;
+          degrees = getK();
           cout << "Temperature in Celsius: " << KtoC(degrees) << endl;
           break;
       case 6:
-          cout << "Enter the temperature in Kelvin: ";
-          cin >> degrees;
+          degrees = getK();
           cout << "Temperature in Fahrenheit: " << KtoF(degrees) << endl;
           break;
       default:
@@ -64,14 +53,12 @@ int main() {
               return 0;
       }
   }
-  
-
 
     return 0;
 }
 
 
-float FtoC(float degrees) { //works
+float FtoC(float degrees){ //works
     float result = (5.0 / 9.0) * (degrees - 32.0);
     return result;
 }
@@ -98,4 +85,36 @@ float KtoC(float degrees) { //works
 float KtoF(float degrees) { //works
     float result = degrees*(9.0/5.0)-459.67;
     return result;
+}
+
+void menu() {
+    cout << endl << "Enter a number to choose an option: " << endl;
+    cout << "1 - convert Fahrenheit to Celsius" << endl;
+    cout << "2 - convert Fahrenheit to Kelvin" << endl;
+    cout << "3 - convert Celsius to Fahrenheit" << endl;
+    cout << "4 - convert Celsius to Kelvin " << endl;
+    cout << "5 - convert Kelvin to Celsius" << endl;
+    cout << "6 - convert Kelvin to Fahrenheit" << endl;
+    cout << "7 - exit the program" << endl;
+}
+
+float getF() {
+    float F;
+    cout << "Enter the temperature in Fahrenheit: ";
+    cin >> F;
+    return F;
+}
+
+float getC() {
+    float C;
+    cout << "Enter the temperature in Celsius: ";
+    cin >> C;
+    return C;
+}
+
+float getK() {
+    float K;
+    cout << "Enter the temperature in Kelvin: ";
+    cin >> K;
+    return K;
 }
