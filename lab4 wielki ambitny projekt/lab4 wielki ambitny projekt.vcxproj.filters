@@ -18,5 +18,8 @@
     <ClCompile Include="lab4 wielki ambitny projekt.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="headerFile.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -2,115 +2,179 @@
 
 #include <iostream>
 #include <limits>
+#include "headerFile.h";
 using namespace std;
 
-float FtoC(float degrees); // Fahr to Celsius prototype
-float FtoK(float degrees);
-float CtoF(float degrees);
-float CtoK(float degrees);
-float KtoC(float degrees);
-float KtoF(float degrees);
-void menu();
-float getF();
-float getC();
-float getK();
-float check(float temp, char u);
-void waitForEnter();
+int DataCounter = 0;
+double memory[100] = { 0 }; 
+char memoryUnit[100] = { ' ' };
+
 
 
 int main() {
     float degrees;
     int choice;
-
+	DataCounter = 0;
+	memory[100] = 0;
+	memoryUnit[100] = ' ';
 
     while (1) {
         system("cls");
 
-        menu();
-        cin >> choice;
-        switch (choice)
-        {
-        case 1:
-            degrees = getF();
-            degrees = check(degrees, 'F');
-            if (degrees == -999.0) {
-                cout << "Invalid temperature." << endl;
-                waitForEnter();
+        if (DataCounter >= 99) {
+            cout << "Memory full. Clear history?" << endl;
+            cout << "1 - Yes" << endl;
+            cout << "2 - No (Exit program)" << endl;
+            cin >> choice;
+            if (choice == 1) {
+                DataCounter = 0;
             }
             else {
-                cout << "Temperature in Celsius: " << FtoC(degrees) << endl;
+                cout << "Exiting program";
                 waitForEnter();
-            }
-            break;
-        case 2:
-            degrees = getF();
-            degrees = check(degrees, 'F');
-            if (degrees == -999.0) {
-                cout << "Invalid temperature." << endl;
-                waitForEnter();
-            }
-            else {
-                cout << "Temperature in Kelvin: " << FtoK(degrees) << endl;
-                waitForEnter();
-            }
-            break;
-        case 3:
-            degrees = getC();
-            degrees = check(degrees, 'C');
-            if (degrees == -999.0) {
-                cout << "Invalid temperature." << endl;
-                waitForEnter();
-            }
-            else {
-                cout << "Temperature in Fahrenheit: " << CtoF(degrees) << endl;
-                waitForEnter();
-            }
-
-            break;
-        case 4:
-            degrees = getC();
-            degrees = check(degrees, 'C');
-            if (degrees == -999.0) {
-                cout << "Invalid temperature." << endl;
-                waitForEnter();
-            }
-            else {
-                cout << "Temperature in Kelvin: " << CtoK(degrees) << endl;
-                waitForEnter();
-            }
-
-            break;
-        case 5:
-            degrees = getK();
-            degrees = check(degrees, 'K');
-            if (degrees == -999.0) {
-                cout << "Invalid temperature." << endl;
-                waitForEnter();
-            }
-            else {
-                cout << "Temperature in Celsius: " << KtoC(degrees) << endl;
-                waitForEnter();
-            }
-            break;
-        case 6:
-            degrees = getK();
-            degrees = check(degrees, 'K');
-            if (degrees == -999.0) {
-                cout << "Invalid temperature." << endl;
-                waitForEnter();
-            }
-            else {
-                cout << "Temperature in Fahrenheit: " << KtoF(degrees) << endl;
-                waitForEnter();
-            }
-            break;
-
-        default:
-            cout << "Exiting program";
-            waitForEnter();
-            return 0;
+                return 0;
             }
         }
+        else {
+            menu();
+            cin >> choice;
+            switch (choice)
+            {
+            case 1:
+                degrees = getF();
+                degrees = check(degrees, 'F');
+                if (degrees == -999.0) {
+                    cout << "Invalid temperature." << endl;
+                    waitForEnter();
+                }
+                else {
+                    cout << "Temperature in Celsius: " << FtoC(degrees) << endl;
+                    memory[DataCounter] = degrees;
+                    memoryUnit[DataCounter] = 'F';
+                    DataCounter++;
+                    memory[DataCounter] = FtoC(degrees);
+                    memoryUnit[DataCounter] = 'C';
+                    DataCounter++;
+                    waitForEnter();
+                }
+                break;
+            case 2:
+                degrees = getF();
+                degrees = check(degrees, 'F');
+                if (degrees == -999.0) {
+                    cout << "Invalid temperature." << endl;
+                    waitForEnter();
+                }
+                else {
+                    cout << "Temperature in Kelvin: " << FtoK(degrees) << endl;
+                    memory[DataCounter] = degrees;
+                    memoryUnit[DataCounter] = 'F';
+                    DataCounter++;
+                    memory[DataCounter] = FtoK(degrees);
+                    memoryUnit[DataCounter] = 'K';
+                    DataCounter++;
+                    waitForEnter();
+                }
+                break;
+            case 3:
+                degrees = getC();
+                degrees = check(degrees, 'C');
+                if (degrees == -999.0) {
+                    cout << "Invalid temperature." << endl;
+                    waitForEnter();
+                }
+                else {
+                    cout << "Temperature in Fahrenheit: " << CtoF(degrees) << endl;
+                    memory[DataCounter] = degrees;
+                    memoryUnit[DataCounter] = 'C';
+                    DataCounter++;
+                    memory[DataCounter] = CtoF(degrees);
+                    memoryUnit[DataCounter] = 'F';
+                    DataCounter++;
+                    waitForEnter();
+                }
+
+                break;
+            case 4:
+                degrees = getC();
+                degrees = check(degrees, 'C');
+                if (degrees == -999.0) {
+                    cout << "Invalid temperature." << endl;
+                    waitForEnter();
+                }
+                else {
+                    cout << "Temperature in Kelvin: " << CtoK(degrees) << endl;
+                    memory[DataCounter] = degrees;
+                    memoryUnit[DataCounter] = 'C';
+                    DataCounter++;
+                    memory[DataCounter] = CtoK(degrees);
+                    memoryUnit[DataCounter] = 'K';
+                    DataCounter++;
+                    waitForEnter();
+                }
+
+                break;
+            case 5:
+                degrees = getK();
+                degrees = check(degrees, 'K');
+                if (degrees == -999.0) {
+                    cout << "Invalid temperature." << endl;
+                    waitForEnter();
+                }
+                else {
+                    cout << "Temperature in Celsius: " << KtoC(degrees) << endl;
+                    memory[DataCounter] = degrees;
+                    memoryUnit[DataCounter] = 'K';
+                    DataCounter++;
+                    memory[DataCounter] = KtoC(degrees);
+                    memoryUnit[DataCounter] = 'C';
+                    DataCounter++;
+                    waitForEnter();
+                }
+                break;
+            case 6:
+                degrees = getK();
+                degrees = check(degrees, 'K');
+                if (degrees == -999.0) {
+                    cout << "Invalid temperature." << endl;
+                    waitForEnter();
+                }
+                else {
+                    cout << "Temperature in Fahrenheit: " << KtoF(degrees) << endl;
+                    memory[DataCounter] = degrees;
+                    memoryUnit[DataCounter] = 'K';
+                    DataCounter++;
+                    memory[DataCounter] = KtoF(degrees);
+                    memoryUnit[DataCounter] = 'F';
+                    DataCounter++;
+                    waitForEnter();
+                }
+                break;
+
+            case 7:
+                if (DataCounter == 0) {
+                    cout << "No history available." << endl;
+                    waitForEnter();
+                }
+                else {
+                    cout << "Conversion History:" << endl;
+                    for (int i = 0; i < DataCounter; i += 2) {
+						int EntryNumber = (i / 2) + 1;
+                            cout << "<" << EntryNumber << "> " << memory[i] << " " << memoryUnit[i] << " -> " << memory[i + 1] << " " << memoryUnit[i + 1] << endl;
+                        
+                    }
+                    waitForEnter();
+                }
+				break;
+
+
+            default:
+                cout << "Exiting program";
+                waitForEnter();
+                return 0;
+            }
+        }
+    }
 
         return 0;
     }
@@ -154,7 +218,8 @@ void menu() {
     cout << "4 - convert Celsius to Kelvin " << endl;
     cout << "5 - convert Kelvin to Celsius" << endl;
     cout << "6 - convert Kelvin to Fahrenheit" << endl;
-    cout << "7 - exit the program" << endl;
+	cout << "7 - show history" << endl;
+    cout << "8 - exit the program" << endl;
 }
 
 float getF() {
