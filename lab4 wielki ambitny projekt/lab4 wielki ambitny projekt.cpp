@@ -5,28 +5,25 @@
 #include "headerFile.h";
 using namespace std;
 
-int DataCounter = 0;
+int DataCounter;
 double memory[100] = { 0 }; 
 char memoryUnit[100] = { ' ' };
 
-
-
 int main() {
     float degrees;
+    bool yesno;
     int choice;
-	DataCounter = 0;
-	memory[100] = 0;
-	memoryUnit[100] = ' ';
+    DataCounter = 0;
 
     while (1) {
-        system("cls");
+        system("cls"); //wywołuje polecenie systemowe clear screen
 
         if (DataCounter >= 99) {
             cout << "Memory full. Clear history?" << endl;
             cout << "1 - Yes" << endl;
             cout << "2 - No (Exit program)" << endl;
-            cin >> choice;
-            if (choice == 1) {
+            cin >> yesno;
+            if (yesno == true) {
                 DataCounter = 0;
             }
             else {
@@ -35,6 +32,8 @@ int main() {
                 return 0;
             }
         }
+
+
         else {
             menu();
             cin >> choice;
@@ -157,27 +156,60 @@ int main() {
                     waitForEnter();
                 }
                 else {
-                    cout << "Conversion History:" << endl;
-                    for (int i = 0; i < DataCounter; i += 2) {
-						int EntryNumber = (i / 2) + 1;
+                    menu2();
+                    cin >> choice;
+                    switch (choice)
+                    {
+                    case 1:
+                        for (int i = 0; i < DataCounter; i += 2) {
+                            if (memoryUnit[i] == 'F') {
+                                int EntryNumber = (i / 2) + 1;
+                                cout << "<" << EntryNumber << "> " << memory[i] << " " << memoryUnit[i] << " -> " << memory[i + 1] << " " << memoryUnit[i + 1] << endl;
+                            }
+                            else
+                                continue;
+                        }
+                        break;
+                    case 2:
+                        for (int i = 0; i < DataCounter; i += 2) {
+                            if (memoryUnit[i] == 'C') {
+                                int EntryNumber = (i / 2) + 1;
+                                cout << "<" << EntryNumber << "> " << memory[i] << " " << memoryUnit[i] << " -> " << memory[i + 1] << " " << memoryUnit[i + 1] << endl;
+                            }
+                            else
+                                continue;
+                        }
+                        break;
+                    case 3:
+                        for (int i = 0; i < DataCounter; i += 2) {
+                            if (memoryUnit[i] == 'K') {
+                                int EntryNumber = (i / 2) + 1;
+                                cout << "<" << EntryNumber << "> " << memory[i] << " " << memoryUnit[i] << " -> " << memory[i + 1] << " " << memoryUnit[i + 1] << endl;
+                            }
+                            else
+                                continue;
+                        }
+                        break;
+                    default:
+                        cout << "Conversion History:" << endl;
+                        for (int i = 0; i < DataCounter; i += 2) {
+                            int EntryNumber = (i / 2) + 1;
                             cout << "<" << EntryNumber << "> " << memory[i] << " " << memoryUnit[i] << " -> " << memory[i + 1] << " " << memoryUnit[i + 1] << endl;
-                        
+                            
+                        }
                     }
                     waitForEnter();
-                }
-				break;
-
+                    break;
 
             default:
                 cout << "Exiting program";
                 waitForEnter();
                 return 0;
+                }
             }
         }
     }
-
-        return 0;
-    }
+}
 
 
 
@@ -219,7 +251,16 @@ void menu() {
     cout << "5 - convert Kelvin to Celsius" << endl;
     cout << "6 - convert Kelvin to Fahrenheit" << endl;
 	cout << "7 - show history" << endl;
-    cout << "8 - exit the program" << endl;
+    cout << "8 - exit the program" << endl; 
+    //zad 1. lab 6. = ???
+}
+
+void menu2() {
+    cout << endl << "Enter a number to choose which part of history to show: " << endl;
+    cout << "1 - conversions from F to C and to K" << endl;
+    cout << "2 - conversions from C to F and to K" << endl;
+    cout << "3 - conversions from K to C and F" << endl;
+    cout << "4 - full history" << endl;
 }
 
 float getF() {
@@ -273,3 +314,4 @@ void waitForEnter() {
     kolejny Enter */
     cin.get();
 }
+

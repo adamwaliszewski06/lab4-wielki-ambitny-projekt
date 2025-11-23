@@ -5,6 +5,7 @@ float CtoK(float degrees);
 float KtoC(float degrees);
 float KtoF(float degrees);
 void menu();
+void menu2();
 float getF();
 float getC();
 float getK();
