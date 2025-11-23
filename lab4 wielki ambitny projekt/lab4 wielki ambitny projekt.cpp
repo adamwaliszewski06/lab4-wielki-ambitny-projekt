@@ -5,9 +5,9 @@
 #include "headerFile.h";
 using namespace std;
 
-int DataCounter;
-double memory[100] = { 0 }; 
-char memoryUnit[100] = { ' ' };
+int DataCounter; // zlicza ile jest zapisanych wartości (każda konwersja to +2 do tej liczby
+double memory[100] = { 0 }; // tablica przechowująca wartości liczbowe tempteratur
+char memoryUnit[100] = { ' ' }; //tablica przechowująca symbole temperatur
 
 int main() {
     float degrees;
@@ -41,19 +41,19 @@ int main() {
             {
             case 1:
                 degrees = getF();
-                degrees = check(degrees, 'F');
+                degrees = check(degrees, 'F'); // sprawdza, czy temperatura mieści się we właściwym zakresie; jeśli tak, zwraca ją, a jeśli nie, to zwraca -999.0
                 if (degrees == -999.0) {
                     cout << "Invalid temperature." << endl;
                     waitForEnter();
                 }
                 else {
-                    cout << "Temperature in Celsius: " << FtoC(degrees) << endl;
-                    memory[DataCounter] = degrees;
-                    memoryUnit[DataCounter] = 'F';
-                    DataCounter++;
-                    memory[DataCounter] = FtoC(degrees);
+                    cout << "Temperature in Celsius: " << FtoC(degrees) << endl; //wyświetla przekonwertowaną temperaturę
+                    memory[DataCounter] = degrees; //zapisuje wprowadzoną temperaturę
+                    memoryUnit[DataCounter] = 'F'; //i jej symbol
+                    DataCounter++; 
+                    memory[DataCounter] = FtoC(degrees); //zapisuje przekonwertowaną temperaturę i symbol
                     memoryUnit[DataCounter] = 'C';
-                    DataCounter++;
+                    DataCounter++; // łącznie DataCounter=DataCounter+2 po każdej konwersji
                     waitForEnter();
                 }
                 break;
@@ -161,8 +161,8 @@ int main() {
                     switch (choice)
                     {
                     case 1:
-                        for (int i = 0; i < DataCounter; i += 2) {
-                            if (memoryUnit[i] == 'F') {
+                        for (int i = 0; i < DataCounter; i += 2) { //sprawdza tylko temperatury wprowadzone
+                            if (memoryUnit[i] == 'F') { 
                                 int EntryNumber = (i / 2) + 1;
                                 cout << "<" << EntryNumber << "> " << memory[i] << " " << memoryUnit[i] << " -> " << memory[i + 1] << " " << memoryUnit[i + 1] << endl;
                             }
