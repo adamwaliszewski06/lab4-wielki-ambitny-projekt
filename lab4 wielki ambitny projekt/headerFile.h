@@ -12,3 +12,4 @@ float getK();
 float check(float temp, char u);
 void waitForEnter();
 void removeFromHistory(int nr);
+bool readInt(int& out);
