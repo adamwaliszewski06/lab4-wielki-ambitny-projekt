@@ -1,6 +1,4 @@
-﻿
-
-#include <iostream>
+﻿#include <iostream>
 #include <limits>
 #include "headerFile.h";
 using namespace std;
@@ -12,7 +10,7 @@ char memoryUnit[100] = { ' ' }; //tablica przechowująca symbole temperatur
 int main() {
     float degrees;
     bool yesno;
-    int choice;
+    int choice, choice2;
     DataCounter = 0;
 
     while (1) {
@@ -21,15 +19,13 @@ int main() {
         if (DataCounter >= 99) {
             cout << "Memory full. Clear history?" << endl;
             cout << "1 - Yes" << endl;
-            cout << "2 - No (Exit program)" << endl;
+            cout << "0 - No" << endl;
             cin >> yesno;
             if (yesno == true) {
                 DataCounter = 0;
             }
             else {
-                cout << "Exiting program";
-                waitForEnter();
-                return 0;
+                cout << "Further conversions will not be saved in history.";
             }
         }
 
@@ -39,21 +35,30 @@ int main() {
             cin >> choice;
             switch (choice)
             {
+            case -1:
+                cout << "Exiting program";
+                waitForEnter();
+                return 0;
             case 1:
                 degrees = getF();
-                degrees = check(degrees, 'F'); // sprawdza, czy temperatura mieści się we właściwym zakresie; jeśli tak, zwraca ją, a jeśli nie, to zwraca -999.0
+                degrees = check(degrees, 'F'); // sprawdza, czy temperatura mieści się we właściwym zakresie; jeśli tak, zwraca ją
+                //a jeśli nie, to zwraca -999.0
                 if (degrees == -999.0) {
                     cout << "Invalid temperature." << endl;
                     waitForEnter();
                 }
                 else {
                     cout << "Temperature in Celsius: " << FtoC(degrees) << endl; //wyświetla przekonwertowaną temperaturę
-                    memory[DataCounter] = degrees; //zapisuje wprowadzoną temperaturę
-                    memoryUnit[DataCounter] = 'F'; //i jej symbol
-                    DataCounter++; 
-                    memory[DataCounter] = FtoC(degrees); //zapisuje przekonwertowaną temperaturę i symbol
-                    memoryUnit[DataCounter] = 'C';
-                    DataCounter++; // łącznie DataCounter=DataCounter+2 po każdej konwersji
+                    if (DataCounter <= 98) {
+                        memory[DataCounter] = degrees; //zapisuje wprowadzoną temperaturę
+                        memoryUnit[DataCounter] = 'F'; //i jej symbol
+                        DataCounter++;
+                        memory[DataCounter] = FtoC(degrees); //zapisuje przekonwertowaną temperaturę i symbol
+                        memoryUnit[DataCounter] = 'C';
+                        DataCounter++; // łącznie DataCounter=DataCounter+2 po każdej konwersji
+                    }
+                    else
+                        cout << "This conversion was not added to history due to lack of space in memory.";
                     waitForEnter();
                 }
                 break;
@@ -65,13 +70,17 @@ int main() {
                     waitForEnter();
                 }
                 else {
-                    cout << "Temperature in Kelvin: " << FtoK(degrees) << endl;
-                    memory[DataCounter] = degrees;
-                    memoryUnit[DataCounter] = 'F';
-                    DataCounter++;
-                    memory[DataCounter] = FtoK(degrees);
-                    memoryUnit[DataCounter] = 'K';
-                    DataCounter++;
+                    if (DataCounter <= 98) {
+                        cout << "Temperature in Kelvin: " << FtoK(degrees) << endl;
+                        memory[DataCounter] = degrees;
+                        memoryUnit[DataCounter] = 'F';
+                        DataCounter++;
+                        memory[DataCounter] = FtoK(degrees);
+                        memoryUnit[DataCounter] = 'K';
+                        DataCounter++;
+                    }
+                    else
+                        cout << "This conversion was not added to history due to lack of space in memory.";
                     waitForEnter();
                 }
                 break;
@@ -83,13 +92,17 @@ int main() {
                     waitForEnter();
                 }
                 else {
-                    cout << "Temperature in Fahrenheit: " << CtoF(degrees) << endl;
-                    memory[DataCounter] = degrees;
-                    memoryUnit[DataCounter] = 'C';
-                    DataCounter++;
-                    memory[DataCounter] = CtoF(degrees);
-                    memoryUnit[DataCounter] = 'F';
-                    DataCounter++;
+                    if (DataCounter <= 98) {
+                        cout << "Temperature in Fahrenheit: " << CtoF(degrees) << endl;
+                        memory[DataCounter] = degrees;
+                        memoryUnit[DataCounter] = 'C';
+                        DataCounter++;
+                        memory[DataCounter] = CtoF(degrees);
+                        memoryUnit[DataCounter] = 'F';
+                        DataCounter++;
+                    }
+                    else
+                        cout << "This conversion was not added to history due to lack of space in memory.";
                     waitForEnter();
                 }
 
@@ -102,6 +115,7 @@ int main() {
                     waitForEnter();
                 }
                 else {
+                    if (DataCounter <= 98) {
                     cout << "Temperature in Kelvin: " << CtoK(degrees) << endl;
                     memory[DataCounter] = degrees;
                     memoryUnit[DataCounter] = 'C';
@@ -109,6 +123,9 @@ int main() {
                     memory[DataCounter] = CtoK(degrees);
                     memoryUnit[DataCounter] = 'K';
                     DataCounter++;
+                    }
+                    else
+                        cout << "This conversion was not added to history due to lack of space in memory.";
                     waitForEnter();
                 }
 
@@ -121,6 +138,7 @@ int main() {
                     waitForEnter();
                 }
                 else {
+                    if (DataCounter <= 98) {
                     cout << "Temperature in Celsius: " << KtoC(degrees) << endl;
                     memory[DataCounter] = degrees;
                     memoryUnit[DataCounter] = 'K';
@@ -128,6 +146,9 @@ int main() {
                     memory[DataCounter] = KtoC(degrees);
                     memoryUnit[DataCounter] = 'C';
                     DataCounter++;
+                    }
+                    else
+                        cout << "This conversion was not added to history due to lack of space in memory.";
                     waitForEnter();
                 }
                 break;
@@ -139,13 +160,17 @@ int main() {
                     waitForEnter();
                 }
                 else {
-                    cout << "Temperature in Fahrenheit: " << KtoF(degrees) << endl;
-                    memory[DataCounter] = degrees;
-                    memoryUnit[DataCounter] = 'K';
-                    DataCounter++;
-                    memory[DataCounter] = KtoF(degrees);
-                    memoryUnit[DataCounter] = 'F';
-                    DataCounter++;
+                    if (DataCounter <= 98) {
+                        cout << "Temperature in Fahrenheit: " << KtoF(degrees) << endl;
+                        memory[DataCounter] = degrees;
+                        memoryUnit[DataCounter] = 'K';
+                        DataCounter++;
+                        memory[DataCounter] = KtoF(degrees);
+                        memoryUnit[DataCounter] = 'F';
+                        DataCounter++;
+                    }
+                    else
+                        cout << "This conversion was not added to history due to lack of space in memory.";
                     waitForEnter();
                 }
                 break;
@@ -157,49 +182,89 @@ int main() {
                 }
                 else {
                     menu2();
-                    cin >> choice;
-                    switch (choice)
+                    cin >> choice2;
+                    switch (choice2)
                     {
                     case 1:
-                        for (int i = 0; i < DataCounter; i += 2) { //sprawdza tylko temperatury wprowadzone
-                            if (memoryUnit[i] == 'F') { 
+                    {
+                        bool found = false;
+                        for (int i = 0; i < DataCounter; i += 2) { //patrzy na temperatury wprowadzone
+                            if (memoryUnit[i] == 'F') {
                                 int EntryNumber = (i / 2) + 1;
                                 cout << "<" << EntryNumber << "> " << memory[i] << " " << memoryUnit[i] << " -> " << memory[i + 1] << " " << memoryUnit[i + 1] << endl;
+                                found = true;
                             }
                             else
                                 continue;
                         }
-                        break;
+                        if (!found) { //if not found
+                            cout << "No conversion history for F found." << endl;
+                        }
+                    }
+                    break;
                     case 2:
+                    {
+                        bool found = false;
                         for (int i = 0; i < DataCounter; i += 2) {
                             if (memoryUnit[i] == 'C') {
                                 int EntryNumber = (i / 2) + 1;
                                 cout << "<" << EntryNumber << "> " << memory[i] << " " << memoryUnit[i] << " -> " << memory[i + 1] << " " << memoryUnit[i + 1] << endl;
+                                found = true;
                             }
                             else
                                 continue;
                         }
-                        break;
+                        if (!found) {
+                            cout << "No conversion history for C found." << endl;
+                        }
+                    }
+                    break;
                     case 3:
+                    {
+                        bool found = false;
+
                         for (int i = 0; i < DataCounter; i += 2) {
                             if (memoryUnit[i] == 'K') {
                                 int EntryNumber = (i / 2) + 1;
                                 cout << "<" << EntryNumber << "> " << memory[i] << " " << memoryUnit[i] << " -> " << memory[i + 1] << " " << memoryUnit[i + 1] << endl;
+                                found = true;
                             }
                             else
                                 continue;
                         }
-                        break;
+                        if (!found) {
+                            cout << "No conversion history for K found." << endl;
+                        }
+                    }
+                    break;
                     default:
-                        cout << "Conversion History:" << endl;
                         for (int i = 0; i < DataCounter; i += 2) {
                             int EntryNumber = (i / 2) + 1;
                             cout << "<" << EntryNumber << "> " << memory[i] << " " << memoryUnit[i] << " -> " << memory[i + 1] << " " << memoryUnit[i + 1] << endl;
-                            
                         }
                     }
                     waitForEnter();
                     break;
+            case 8:
+            {
+                for (int i = 0; i < DataCounter; i += 2) {
+                    int EntryNumber = (i / 2) + 1;
+                    cout << "<" << EntryNumber << "> " << memory[i] << " " << memoryUnit[i] << " -> " << memory[i + 1] << " " << memoryUnit[i + 1] << endl;
+                }
+                cout << "Which element would you like to delete from history?";
+                int entityToRemove;
+                cin >> entityToRemove;
+                int maxEntries = DataCounter / 2;
+                if (entityToRemove < 1 || entityToRemove > maxEntries) {
+                    cout << "Error. Invalid number – there is no element <" << entityToRemove << "> in history." << endl;
+                }
+                else {
+                    removeFromHistory(entityToRemove);
+                }
+            }
+
+            waitForEnter();
+            break;
 
             default:
                 cout << "Exiting program";
@@ -251,8 +316,8 @@ void menu() {
     cout << "5 - convert Kelvin to Celsius" << endl;
     cout << "6 - convert Kelvin to Fahrenheit" << endl;
 	cout << "7 - show history" << endl;
-    cout << "8 - exit the program" << endl; 
-    //zad 1. lab 6. = ???
+    cout << "8 - remove elements from history" << endl;
+    cout << "-1 - exit the program" << endl; 
 }
 
 void menu2() {
@@ -304,6 +369,17 @@ float check(float temp, char u) { //u for unit
         return -999.0;
     }
     return temp; //jeżeli temperatura ma poprawną jednostkę i jest większa niż minimum dla tej jednoski, po prostu zwróć temperaturę
+}
+
+void removeFromHistory(int nr) {
+    int idx = (nr - 1) * 2; // indeks pierwszego elementu pary do usunięcia
+    // przesuwamy wszystkie elementy po usuwanej parze o 2 miejsca w lewo
+    for (int i = idx; i < DataCounter - 2; ++i) {
+        memory[i] = memory[i + 2];
+        memoryUnit[i] = memoryUnit[i + 2];
+    }
+    DataCounter -= 2;
+    cout << "Element <" << nr << "> removed from history." << endl;
 }
 
 void waitForEnter() {
