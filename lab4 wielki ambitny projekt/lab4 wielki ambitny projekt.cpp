@@ -417,7 +417,7 @@ int main() {
                     break;
                 }
                 if (DataCounter + howMany * 2 > 100) {
-                    cout << "Not enough space in memory for that many entries. Generate only " << (100 - DataCounter) / 2 << " entries? (1 - Yes, 0 - No)" << endl;
+                    cout << "Not enough space in memory for that many entries. Generate only " <<(100 - DataCounter) / 2 << " entries? (1 - Yes, 0 - No)" << endl;
                     int yn;
                     if (!readInt(yn)) {
                         cout << "Invalid input." << endl;
