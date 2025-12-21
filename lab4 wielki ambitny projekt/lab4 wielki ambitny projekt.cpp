@@ -1,6 +1,8 @@
 ﻿#include <iostream>
 #include <limits>
 #include <cctype>
+#include <cstdlib> // biblioteki potrzebne do uzycia rand i srand 
+#include <ctime> 
 #include "headerFile.h";
 using namespace std;
 
@@ -20,7 +22,8 @@ bool readInt(int &out) {
 }
 
 int main() {
-    float degrees;
+    srand(static_cast<unsigned>(time(nullptr)));
+    double degrees;
     bool yesno;
     int choice, choice2;
     DataCounter = 0;
@@ -40,7 +43,7 @@ int main() {
                 cout << "Further conversions will not be saved in history.";
             }
         }
-        else {
+        
             menu();
             if (!readInt(choice)) { // zabezpieczenie przy wpisaniu nie-liczby
                 cout << "Invalid input." << endl;
@@ -201,50 +204,50 @@ int main() {
                     switch (choice2)
                     {
                     case 1:
-                        {
-                            bool found = false;
-                            for (int i = 0; i < DataCounter; i += 2) { //patrzy na temperatury wprowadzone
-                                if (memoryUnit[i] == 'F') {
-                                    int EntryNumber = (i / 2) + 1;
-                                    cout << "<" << EntryNumber << "> " << memory[i] << " " << memoryUnit[i] << " -> " << memory[i + 1] << " " << memoryUnit[i + 1] << endl;
-                                    found = true;
-                                }
-                            }
-                            if (!found) {
-                                cout << "No conversion history for F found." << endl;
+                    {
+                        bool found = false;
+                        for (int i = 0; i < DataCounter; i += 2) { //patrzy na temperatury wprowadzone
+                            if (memoryUnit[i] == 'F') {
+                                int EntryNumber = (i / 2) + 1;
+                                cout << "<" << EntryNumber << "> " << memory[i] << " " << memoryUnit[i] << " -> " << memory[i + 1] << " " << memoryUnit[i + 1] << endl;
+                                found = true;
                             }
                         }
-                        break;
+                        if (!found) {
+                            cout << "No conversion history for F found." << endl;
+                        }
+                    }
+                    break;
                     case 2:
-                        {
-                            bool found = false;
-                            for (int i = 0; i < DataCounter; i += 2) {
-                                if (memoryUnit[i] == 'C') {
-                                    int EntryNumber = (i / 2) + 1;
-                                    cout << "<" << EntryNumber << "> " << memory[i] << " " << memoryUnit[i] << " -> " << memory[i + 1] << " " << memoryUnit[i + 1] << endl;
-                                    found = true;
-                                }
-                            }
-                            if (!found) {
-                                cout << "No conversion history for C found." << endl;
+                    {
+                        bool found = false;
+                        for (int i = 0; i < DataCounter; i += 2) {
+                            if (memoryUnit[i] == 'C') {
+                                int EntryNumber = (i / 2) + 1;
+                                cout << "<" << EntryNumber << "> " << memory[i] << " " << memoryUnit[i] << " -> " << memory[i + 1] << " " << memoryUnit[i + 1] << endl;
+                                found = true;
                             }
                         }
-                        break;
+                        if (!found) {
+                            cout << "No conversion history for C found." << endl;
+                        }
+                    }
+                    break;
                     case 3:
-                        {
-                            bool found = false;
-                            for (int i = 0; i < DataCounter; i += 2) {
-                                if (memoryUnit[i] == 'K') {
-                                    int EntryNumber = (i / 2) + 1;
-                                    cout << "<" << EntryNumber << "> " << memory[i] << " " << memoryUnit[i] << " -> " << memory[i + 1] << " " << memoryUnit[i + 1] << endl;
-                                    found = true;
-                                }
-                            }
-                            if (!found) {
-                                cout << "No conversion history for K found." << endl;
+                    {
+                        bool found = false;
+                        for (int i = 0; i < DataCounter; i += 2) {
+                            if (memoryUnit[i] == 'K') {
+                                int EntryNumber = (i / 2) + 1;
+                                cout << "<" << EntryNumber << "> " << memory[i] << " " << memoryUnit[i] << " -> " << memory[i + 1] << " " << memoryUnit[i + 1] << endl;
+                                found = true;
                             }
                         }
-                        break;
+                        if (!found) {
+                            cout << "No conversion history for K found." << endl;
+                        }
+                    }
+                    break;
                     default:
                         for (int i = 0; i < DataCounter; i += 2) {
                             int EntryNumber = (i / 2) + 1;
@@ -256,33 +259,41 @@ int main() {
                 break;
             case 8:
             {
-                if (DataCounter == 0) {
-                    cout << "No history available." << endl;
-                    waitForEnter();
-                }
-                else {
-                    for (int i = 0; i < DataCounter; i += 2) {
-                        int EntryNumber = (i / 2) + 1;
-                        cout << "<" << EntryNumber << "> " << memory[i] << " " << memoryUnit[i] << " -> " << memory[i + 1] << " " << memoryUnit[i + 1] << endl;
-                    }
-                    cout << "Which element would you like to delete from history?" << endl;
-                    int entityToRemove;
-                    if (!readInt(entityToRemove)) {
-                        cout << "Invalid input." << endl;
+                while (1) {
+                    if (DataCounter == 0) {
+                        cout << "No history available." << endl;
                         waitForEnter();
-                        break;
-                    }
-                    int maxEntries = DataCounter / 2;
-                    if (entityToRemove < 1 || entityToRemove > maxEntries) {
-                        cout << "Error. Invalid number - there is no element <" << entityToRemove << "> in history." << endl;
                     }
                     else {
-                        removeFromHistory(entityToRemove);
+                        for (int i = 0; i < DataCounter; i += 2) {
+                            int EntryNumber = (i / 2) + 1;
+                            cout << "<" << EntryNumber << "> " << memory[i] << " " << memoryUnit[i] << " -> " << memory[i + 1] << " " << memoryUnit[i + 1] << endl;
+                        }
+                        cout << "Which element would you like to delete from history?" << endl;
+                        int entityToRemove;
+                        if (!readInt(entityToRemove)) {
+                            cout << "Invalid input." << endl;
+                            waitForEnter();
+                            break;
+                        }
+                        int maxEntries = DataCounter / 2;
+                        if (entityToRemove < 1 || entityToRemove > maxEntries) {
+                            cout << "Error. Invalid number - there is no element <" << entityToRemove << "> in history." << endl;
+                        }
+                        else {
+                            removeFromHistory(entityToRemove);
+                        }
+						cout << "Would you like to remove another element? (1 - Yes, 0 - No)" << endl;
+						int yn;
+                        cin >> yn;
+                        if (yn != 1) {
+							break; // wychodzi z pętli while(1) i wraca do głównego menu
+                        }
+                        
                     }
-                    waitForEnter();
                 }
             }
-                break;
+            break;
             case 9: // modyfikacja wpisu w historii
             {
                 if (DataCounter == 0) {
@@ -317,7 +328,7 @@ int main() {
                         break;
                     }
                     cout << "Enter the temperature value: ";
-                    float newTemp;
+                    double newTemp;
                     if (!(cin >> newTemp)) {
                         cout << "Invalid number input." << endl;
                         cin.clear();
@@ -326,7 +337,7 @@ int main() {
                         break;
                     }
                     int idx = (entityToModify - 1) * 2;
-                    float checked = check(newTemp, newUnit);
+                    double checked = check(newTemp, newUnit);
                     if (checked == -999.0) {
                         cout << "Invalid temperature for unit " << newUnit << endl;
                         waitForEnter();
@@ -395,51 +406,145 @@ int main() {
                     waitForEnter();
                 }
             }
-                break;
+            break;
             case 10: // losowe wypełnienie historii
-                {
-                    // implementacja opcjonalna
-                    cout << "Random fill not implemented." << endl;
+            {
+                cout << "How many random entries would you like to generate?" << endl;
+                int howMany;
+                if (!readInt(howMany)) {
+                    cout << "Invalid input." << endl;
                     waitForEnter();
+                    break;
+                }
+                if (DataCounter + howMany * 2 > 100) {
+                    cout << "Not enough space in memory for that many entries. Generate only " << (100 - DataCounter) / 2 << " entries? (1 - Yes, 0 - No)" << endl;
+                    int yn;
+                    if (!readInt(yn)) {
+                        cout << "Invalid input." << endl;
+                        waitForEnter();
+                        break;
+                    }
+                    if (yn == 1) {
+                        howMany = (100 - DataCounter) / 2;
+                    }
+                    else {
+                        break;
+                    }
+                }
+
+                for (int i = 0; i < howMany; ++i) {
+                    int unitSelect = rand() % 3; // losuje 0, 1 lub 2
+                    double fromTemp;
+                    if (unitSelect == 0) {
+                        int tempInt = rand() % 1001 - 273; // int in [-273, 727]
+                        double fromTemp = (double)tempInt;
+
+                        memory[DataCounter] = fromTemp;
+                        memoryUnit[DataCounter] = 'C';
+                        DataCounter++;
+
+                        int toUnitSelect = rand() % 2; // 0 lub 1
+
+                        if (toUnitSelect == 0) { // C to F
+
+                            memory[DataCounter] = CtoF(fromTemp);
+                            memoryUnit[DataCounter] = 'F';
+                            DataCounter++;
+
+                        }
+                        else {
+
+                            memory[DataCounter] = CtoK(fromTemp);
+                            memoryUnit[DataCounter] = 'K';
+                            DataCounter++;
+                        }
+                    }
+
+                    else if (unitSelect == 1) { // F
+                        int tempInt = rand() % 1001 - 459; // int in [-459, 541]
+                        double fromTemp = (double)tempInt;
+                        int toUnitSelect = rand() % 2; // 0 lub 1
+
+                        memory[DataCounter] = fromTemp;
+                        memoryUnit[DataCounter] = 'F';
+                        DataCounter++;
+
+
+                        if (toUnitSelect == 0) {// F to C
+                            memory[DataCounter] = FtoC(fromTemp);
+                            memoryUnit[DataCounter] = 'C';
+                            DataCounter++;
+                        }
+                        else { // F to K
+                            memory[DataCounter] = FtoK(fromTemp);
+                            memoryUnit[DataCounter] = 'K';
+                            DataCounter++;
+                        }
+                    }
+                    else { // K
+                        int tempInt = rand() % 1001; // int in [0, 1000]
+                        double fromTemp = (double)tempInt;
+                        int toUnitSelect = rand() % 2; // 0 lub 1
+
+                        memory[DataCounter] = fromTemp;
+                        memoryUnit[DataCounter] = 'K';
+                        DataCounter++;
+
+                        if (toUnitSelect == 0) { // K to C
+                            memory[DataCounter] = KtoC(fromTemp);
+                            memoryUnit[DataCounter] = 'C';
+                            DataCounter++;
+                        }
+                        else { // K to F
+                            memory[DataCounter] = KtoF(fromTemp);
+                            memoryUnit[DataCounter] = 'F';
+                            DataCounter++;
+                        }
+                    }
                 }
                 break;
             default:
                 cout << "Exiting program";
                 waitForEnter();
                 return 0;
-            } // koniec switch(choice)
-        } // koniec else (menu)
-    } // koniec while
+            }
+            }
+         
+
+    }
     return 0;
 }
+    
 
-// funkcje pomocnicze (oryginalne implementacje pozostawione)
-float FtoC(float degrees){
-    float result = (5.0 / 9.0) * (degrees - 32.0);
+       
+
+
+double FtoC(double degrees){
+    double result = (5.0 / 9.0) * (degrees - 32.0);
     return result;
 }
 
-float FtoK(float degrees) {
-    float result = (5.0 / 9.0) * (degrees + 459.67);
+double FtoK(double degrees) {
+    double result = (5.0 / 9.0) * (degrees + 459.67);
     return result;
 }
-float CtoF(float degrees) {
-    float result = (9.0 / 5.0) * degrees + 32.0;
-    return result;
-}
-
-float CtoK(float degrees) {
-    float result = degrees + 273.15;
+double CtoF(double degrees) {
+    double result = (9.0 / 5.0) * degrees + 32.0;
     return result;
 }
 
-float KtoC(float degrees) {
-    float result = degrees - 273.15;
+double CtoK(double degrees) {
+    double result = degrees + 273.15;
     return result;
 }
 
-float KtoF(float degrees) {
-    float result = degrees*(9.0/5.0)-459.67;
+double KtoC(double degrees) {
+    double result = degrees - 273.15;
+    return result;
+}
+
+double KtoF(double degrees) {
+    double result = degrees*(9.0/5.0)-459.67;
     return result;
 }
 
@@ -466,28 +571,28 @@ void menu2() {
     cout << "4 - full history" << endl;
 }
 
-float getF() {
-    float F;
+double getF() {
+    double F;
     cout << "Enter the temperature in Fahrenheit: ";
     cin >> F;
     return F;
 }
 
-float getC() {
-    float C;
+double getC() {
+    double C;
     cout << "Enter the temperature in Celsius: ";
     cin >> C;
     return C;
 }
 
-float getK() {
-    float K;
+double getK() {
+    double K;
     cout << "Enter the temperature in Kelvin: ";
     cin >> K;
     return K;
 }
 
-float check(float temp, char u) { //u for unit
+double check(double temp, char u) { //u for unit
     if (u == 'K') { // jeśli check (degrees, 'K'), to sprawdź, czy temp<0 - jeśli tak, to zwróć -999
         if (temp < 0.0) {
             return -999.0;

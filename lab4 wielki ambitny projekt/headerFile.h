@@ -1,15 +1,15 @@
-float FtoC(float degrees); // Fahr to Celsius prototype
-float FtoK(float degrees);
-float CtoF(float degrees);
-float CtoK(float degrees);
-float KtoC(float degrees);
-float KtoF(float degrees);
+double FtoC(double degrees); // Fahr to Celsius prototype
+double FtoK(double degrees);
+double CtoF(double degrees);
+double CtoK(double degrees);
+double KtoC(double degrees);
+double KtoF(double degrees);
 void menu();
 void menu2();
-float getF();
-float getC();
-float getK();
-float check(float temp, char u);
+double getF();
+double getC();
+double getK();
+double check(double temp, char u);
 void waitForEnter();
 void removeFromHistory(int nr);
 bool readInt(int& out);
